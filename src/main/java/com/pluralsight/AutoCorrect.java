@@ -8,7 +8,7 @@ public class AutoCorrect {
     private String phone;
     private ArrayList<Vehicle> inventory;
 
-    public AutoCorrect(String name, String address, String phone) {
+    public AutoCorrect(String name, String address, String phone, String part) {
         this.name = name;
         this.address = address;
         this.phone = phone;
