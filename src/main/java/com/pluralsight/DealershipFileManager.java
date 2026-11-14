@@ -8,22 +8,34 @@ import java.util.*;
 
 public class DealershipFileManager {
 
-    public AutoCorrect getDealership() {
-        AutoCorrect dealership =  null;
+    public DealershipFileManager() {
+    }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("resources/inventory.csv"))) {
+    public Dealership getDealership() {
+        Dealership dealership = null;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/inventory.csv"))) {
             String line;
 
-            if ((line = reader.readLine()) !=null) {
+            reader.readLine();
+
+            if ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length >= 3) {
-                    dealership = new AutoCorrect(
+                    dealership = new Dealership(
                             parts[0],
                             parts[1],
-                            parts[2]);
+                            parts[2]
+                    );
                 }
             }
-            while ((line = reader.readLine()) != null && dealership !=null) {
+
+            if (dealership != null) {
+                reader.readLine();
+                reader.readLine();
+            }
+
+            while ((line = reader.readLine()) != null && dealership != null) {
                 String[] vParts = line.split("\\|");
                 if (vParts.length >= 8) {
                     Vehicle entry = new Vehicle(
@@ -46,6 +58,6 @@ public class DealershipFileManager {
         return dealership;
     }
 
-    public static void saveDealership(AutoCorrect dealership) {
+    public static void saveDealership(Dealership dealership) {
     }
 }
