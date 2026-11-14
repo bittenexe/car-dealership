@@ -14,6 +14,7 @@ public class UserInterface {
 
     private void init() {
         this.dealership = dFiles.getDealership();
+
     }
 
     private void displayVehicles(List<Vehicle> vehicles) {
@@ -76,4 +77,5 @@ public class UserInterface {
             }
         }
     }
+
 }

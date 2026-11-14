@@ -17,44 +17,47 @@ public class DealershipFileManager {
         try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/inventory.csv"))) {
             String line;
 
-            reader.readLine();
-
             if ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length >= 3) {
                     dealership = new Dealership(
                             parts[0],
                             parts[1],
-                            parts[2]
-                    );
+                            parts[2]);
                 }
             }
 
-            if (dealership != null) {
-                reader.readLine();
-                reader.readLine();
-            }
-
             while ((line = reader.readLine()) != null && dealership != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
                 String[] vParts = line.split("\\|");
                 if (vParts.length >= 8) {
-                    Vehicle entry = new Vehicle(
-                            Integer.parseInt(vParts[0]),
-                            Integer.parseInt(vParts[1]),
-                            vParts[2],
-                            vParts[3],
-                            vParts[4],
-                            vParts[5],
-                            Integer.parseInt(vParts[6]),
-                            new BigDecimal(vParts[7])
-                    );
-                    dealership.addVehicle(entry);
+                    try {
+                        int vin = Integer.parseInt(vParts[0].trim());
+
+                        Vehicle entry = new Vehicle(
+                                vin,
+                                Integer.parseInt(vParts[1].trim()),
+                                vParts[2].trim(),
+                                vParts[3].trim(),
+                                vParts[4].trim(),
+                                vParts[5].trim(),
+                                Integer.parseInt(vParts[6].trim()),
+                                new BigDecimal(vParts[7].trim())
+                        );
+                        dealership.addVehicle(entry);
+                    } catch (NumberFormatException e) {
+                    }
                 }
             }
 
         } catch (IOException e) {
             System.out.println("Ducking hell, something went wrong.");
+            e.printStackTrace();
         }
+
         return dealership;
     }
 
