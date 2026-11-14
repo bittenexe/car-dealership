@@ -7,17 +7,11 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class DealershipFileManager {
-    private ArrayList<Vehicle> carList;
 
-    public DealershipFileManager() {
-        this.carList = new ArrayList<>();
-    }
-
-    //
     public AutoCorrect getDealership() {
         AutoCorrect dealership =  null;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/inventory.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources/inventory.csv"))) {
             String line;
 
             if ((line = reader.readLine()) !=null) {
@@ -26,8 +20,7 @@ public class DealershipFileManager {
                     dealership = new AutoCorrect(
                             parts[0],
                             parts[1],
-                            parts[2],
-                            parts[3]);
+                            parts[2]);
                 }
             }
             while ((line = reader.readLine()) != null && dealership !=null) {
@@ -48,7 +41,7 @@ public class DealershipFileManager {
             }
 
         } catch (IOException e) {
-            System.out.println("Error reading inventory file.");
+            System.out.println("Ducking hell, something went wrong.");
         }
         return dealership;
     }
